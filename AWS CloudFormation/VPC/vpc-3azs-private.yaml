@@ -91,7 +91,7 @@ Resources:
         Value: 'C private'
       - Key: Reach
         Value: private
-  RouteTablePrivate: # should be RouteTableAPrivate, but logical id was not changed for backward compatibility
+  RouteTableAPrivate: 
     Type: 'AWS::EC2::RouteTable'
     Properties:
       VpcId: !Ref VPC
@@ -116,7 +116,7 @@ Resources:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
       SubnetId: !Ref SubnetAPrivate
-      RouteTableId: !Ref RouteTablePrivate
+      RouteTableId: !Ref RouteTableAPrivate
   RouteTableAssociationBPrivate:
     Type: 'AWS::EC2::SubnetRouteTableAssociation'
     Properties:
@@ -130,7 +130,7 @@ Resources:
   RouteTablePrivateAInternetRouteIPv6:
     Type: 'AWS::EC2::Route'
     Properties:
-      RouteTableId: !Ref RouteTablePrivate
+      RouteTableId: !Ref RouteTableAPrivate
       DestinationIpv6CidrBlock: '::/0'
       EgressOnlyInternetGatewayId: !Ref EgressOnlyInternetGateway
   RouteTablePrivateBInternetRouteIPv6:
@@ -254,7 +254,7 @@ Outputs:
       Name: !Sub '${AWS::StackName}-SubnetsPrivate'
   RouteTablesPrivate:
     Description: 'Route tables private.'
-    Value: !Join [',', [!Ref RouteTablePrivate, !Ref RouteTableBPrivate, !Ref RouteTableCPrivate]]
+    Value: !Join [',', [!Ref RouteTableAPrivate, !Ref RouteTableBPrivate, !Ref RouteTableCPrivate]]
     Export:
       Name: !Sub '${AWS::StackName}-RouteTablesPrivate'
   SubnetAPrivate:
@@ -264,7 +264,7 @@ Outputs:
       Name: !Sub '${AWS::StackName}-SubnetAPrivate'
   RouteTableAPrivate:
     Description: 'Route table A private.'
-    Value: !Ref RouteTablePrivate
+    Value: !Ref RouteTableAPrivate
     Export:
       Name: !Sub '${AWS::StackName}-RouteTableAPrivate'
   SubnetBPrivate:
