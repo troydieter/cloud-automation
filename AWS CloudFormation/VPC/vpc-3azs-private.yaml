@@ -97,7 +97,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
       - Key: Name
-        Value: Private
+        Value: 'A Private'
   RouteTableBPrivate:
     Type: 'AWS::EC2::RouteTable'
     Properties:
