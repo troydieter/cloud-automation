@@ -312,7 +312,7 @@ Resources:
             VpcId: !Ref EC2VPC
             SecurityGroupIngress: 
               - 
-                SourceSecurityGroupId: "sg-0a64569d634211c59"
+                SourceSecurityGroupId: !Ref EC2SecurityGroup
                 SourceSecurityGroupOwnerId: !Ref AWS::AccountId
                 IpProtocol: "-1"
             SecurityGroupEgress: 
