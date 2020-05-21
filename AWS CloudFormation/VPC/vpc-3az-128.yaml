@@ -304,21 +304,21 @@ Resources:
                 Key: "Terraform"
                 Value: "true"
 
-    EC2SecurityGroup:
-        Type: "AWS::EC2::SecurityGroup"
-        Properties:
-            GroupDescription: "default VPC security group"
-            GroupName: "vpc-128 sg"
-            VpcId: !Ref EC2VPC
-            SecurityGroupIngress: 
-              - 
-                SourceSecurityGroupId: !Ref EC2SecurityGroup
-                SourceSecurityGroupOwnerId: !Ref AWS::AccountId
-                IpProtocol: "-1"
-            SecurityGroupEgress: 
-              - 
-                CidrIp: "0.0.0.0/0"
-                IpProtocol: "-1"
+    # EC2SecurityGroup:
+    #     Type: "AWS::EC2::SecurityGroup"
+    #     Properties:
+    #         GroupDescription: "default VPC security group"
+    #         GroupName: "vpc-128 sg"
+    #         VpcId: !Ref EC2VPC
+    #         SecurityGroupIngress: 
+    #           - 
+    #             SourceSecurityGroupId: !GetAtt EC2SecurityGroup.GroupId
+    #             SourceSecurityGroupOwnerId: !Ref AWS::AccountId
+    #             IpProtocol: "-1"
+    #         SecurityGroupEgress: 
+    #           - 
+    #             CidrIp: "0.0.0.0/0"
+    #             IpProtocol: "-1"
 
     EC2VPCDHCPOptionsAssociation:
         Type: "AWS::EC2::VPCDHCPOptionsAssociation"
