@@ -34,16 +34,16 @@ Resources:
     Properties:
       AmazonProvidedIpv6CidrBlock: true
       VpcId: !Ref VPC
-  InternetGateway:
-    Type: 'AWS::EC2::InternetGateway'
-    Properties:
-      Tags:
-      - Key: Name
-        Value: !Sub 10.${ClassB}.0.0/16
-  EgressOnlyInternetGateway:
-    Type: 'AWS::EC2::EgressOnlyInternetGateway'
-    Properties:
-      VpcId: !Ref VPC
+  # InternetGateway:
+  #   Type: 'AWS::EC2::InternetGateway'
+  #   Properties:
+  #     Tags:
+  #     - Key: Name
+  #       Value: !Sub 10.${ClassB}.0.0/16
+  # EgressOnlyInternetGateway:
+  #   Type: 'AWS::EC2::EgressOnlyInternetGateway'
+  #   Properties:
+  #     VpcId: !Ref VPC
   VPCGatewayAttachment:
     Type: 'AWS::EC2::VPCGatewayAttachment'
     Properties:
@@ -242,11 +242,11 @@ Outputs:
     Value: !Ref VPC
     Export:
       Name: !Sub '${AWS::StackName}-VPC'
-  InternetGateway:
-    Description: 'InternetGateway.'
-    Value: !Ref InternetGateway
-    Export:
-      Name: !Sub '${AWS::StackName}-InternetGateway'
+  # InternetGateway:
+  #   Description: 'InternetGateway.'
+  #   Value: !Ref InternetGateway
+  #   Export:
+  #     Name: !Sub '${AWS::StackName}-InternetGateway'
   SubnetsPrivate:
     Description: 'Subnets private.'
     Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]

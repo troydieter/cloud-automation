@@ -1,0 +1,328 @@
+# VPC Deployment for 10.128.128.0/17
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ""
+Resources:
+    EC2VPC:
+        Type: "AWS::EC2::VPC"
+        Properties:
+            CidrBlock: "10.128.128.0/17"
+            EnableDnsSupport: true
+            EnableDnsHostnames: false
+            InstanceTenancy: "default"
+            Tags: 
+              - 
+                Key: "CloudFormation"
+                Value: "true"
+              - 
+                Key: "Name"
+                Value: "us1"
+
+    EC2Subnet:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet4.AvailabilityZone
+            CidrBlock: "10.128.196.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet2:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet3.AvailabilityZone
+            CidrBlock: "10.128.162.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet3:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet7.AvailabilityZone
+            CidrBlock: "10.128.166.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet4:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet5.AvailabilityZone
+            CidrBlock: "10.128.192.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet5:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet9.AvailabilityZone
+            CidrBlock: "10.128.198.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet6:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet10.AvailabilityZone
+            CidrBlock: "10.128.128.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet7:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet8.AvailabilityZone
+            CidrBlock: "10.128.160.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet8:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !Sub "${AWS::Region}b"
+            CidrBlock: "10.128.164.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet9:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !Sub "${AWS::Region}c"
+            CidrBlock: "10.128.194.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet10:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet11.AvailabilityZone
+            CidrBlock: "10.128.134.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet11:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet12.AvailabilityZone
+            CidrBlock: "10.128.132.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2Subnet12:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !Sub "${AWS::Region}a"
+            CidrBlock: "10.128.130.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+
+    EC2NetworkAcl:
+        Type: "AWS::EC2::NetworkAcl"
+        Properties:
+            VpcId: !Ref EC2VPC
+
+    EC2RouteTable:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet6.AvailabilityZone}"
+
+    EC2RouteTable2:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet.AvailabilityZone}"
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+
+    EC2RouteTable3:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+
+    EC2RouteTable4:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet.AvailabilityZone}"
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+
+    EC2RouteTable5:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet2.AvailabilityZone}"
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+
+    EC2RouteTable6:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet2.AvailabilityZone}"
+              - 
+                Key: "Terraform"
+                Value: "true"
+
+    EC2RouteTable7:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet2.AvailabilityZone}"
+
+    EC2RouteTable8:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet6.AvailabilityZone}"
+
+    EC2RouteTable9:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet.AvailabilityZone}"
+
+    EC2RouteTable10:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet6.AvailabilityZone}"
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+
+    EC2RouteTable11:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Terraform"
+                Value: "true"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet2.AvailabilityZone}"
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+
+    EC2RouteTable12:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet.AvailabilityZone}"
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Terraform"
+                Value: "true"
+
+    EC2RouteTable13:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !Ref EC2VPC
+            Tags: 
+              - 
+                Key: "Source"
+                Value: "vpcstudio"
+              - 
+                Key: "Name"
+                Value: !Sub "us1-private-${EC2Subnet6.AvailabilityZone}"
+              - 
+                Key: "Terraform"
+                Value: "true"
+
+    EC2SecurityGroup:
+        Type: "AWS::EC2::SecurityGroup"
+        Properties:
+            GroupDescription: "default VPC security group"
+            GroupName: "vpc-128 sg"
+            VpcId: !Ref EC2VPC
+            SecurityGroupIngress: 
+              - 
+                SourceSecurityGroupId: "sg-0a64569d634211c59"
+                SourceSecurityGroupOwnerId: !Ref AWS::AccountId
+                IpProtocol: "-1"
+            SecurityGroupEgress: 
+              - 
+                CidrIp: "0.0.0.0/0"
+                IpProtocol: "-1"
+
+    EC2VPCDHCPOptionsAssociation:
+        Type: "AWS::EC2::VPCDHCPOptionsAssociation"
+        Properties:
+            DhcpOptionsId: "dopt-1ed11a79"
+            VpcId: "vpc-b55989d3"
+
